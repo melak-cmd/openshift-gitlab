@@ -307,7 +307,7 @@ objects:
           kind: ImageStreamTag
           name: ${APPLICATION_NAME}-redis:3.2.3
       type: ImageChange
-- apiVersion: v1
+- apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
     labels:
