@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- .git/info/exclude
+- ConfigMap/gitlab-config.yaml
+- ConfigMap/gitlab-runner.yaml
+- DeploymentConfig/gitlab-ce-postgresql.yaml
+- DeploymentConfig/gitlab-ce-redis.yaml
+- DeploymentConfig/gitlab-ce-runner.yaml
+- DeploymentConfig/gitlab-ce.yaml
+- ImageStream/gitlab-ce-redis.yaml
+- ImageStream/gitlab-ce-runner.yaml
+- ImageStream/gitlab-ce.yaml
+- PersistentVolumeClaim/gitlab-ce-artifacts.yaml
+- PersistentVolumeClaim/gitlab-ce-data.yaml
+- PersistentVolumeClaim/gitlab-ce-etc.yaml
+- PersistentVolumeClaim/gitlab-ce-pages.yaml
+- PersistentVolumeClaim/gitlab-ce-postgresql.yaml
+- PersistentVolumeClaim/gitlab-ce-redis-data.yaml
+- Route/gitlab-ce.yaml
+- Service/gitlab-ce-postgresql.yaml
+- Service/gitlab-ce-redis.yaml
+- Service/gitlab-ce.yaml
+- ServiceAccount/gitlab-ce-runner-user.yaml
+- ServiceAccount/gitlab-ce-user.yaml
+- template.yaml
