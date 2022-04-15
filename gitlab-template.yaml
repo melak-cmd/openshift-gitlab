@@ -388,6 +388,8 @@ objects:
           volumeMounts:
           - mountPath: /var/lib/pgsql/data
             name: gitlab-ce-volume-3
+          - mountPath: /var/lib/pgsql/data/userdata
+            name: gitlab-ce-volume-3
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         terminationGracePeriodSeconds: 30
