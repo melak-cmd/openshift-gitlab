@@ -32,7 +32,7 @@ spec:
         - /scripts/entrypoint
         env:
         - name: REGISTRATION_TOKEN
-          value: rBki33X6YKnvFN5x
+          value: yIFjp40pXcwjNuor
         - name: REGISTER_LOCKED
           value: "false"
         - name: KUBERNETES_PRIVILEGED
