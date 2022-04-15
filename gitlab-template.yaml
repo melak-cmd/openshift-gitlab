@@ -56,7 +56,7 @@ objects:
   kind: ServiceAccount
   metadata:
     name: ${APPLICATION_NAME}-runner-user
-- apiVersion: v1
+- apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
     labels:
@@ -157,7 +157,7 @@ objects:
           kind: ImageStreamTag
           name: ${APPLICATION_NAME}:gitlab-12.4.8
       type: ImageChange
-- apiVersion: v1
+- apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
     labels:
@@ -245,7 +245,7 @@ objects:
           kind: ImageStreamTag
           name: ${APPLICATION_NAME}-runner:gitlab-runner-v12.7.0
       type: ImageChange
-- apiVersion: v1
+- apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
     labels:
