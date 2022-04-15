@@ -3,11 +3,11 @@ kind: DeploymentConfig
 metadata:
   labels:
     app: gitlab-ce
-    createdBy: gitlab-ce-template
   name: gitlab-ce-runner
   namespace: issc-lab
 spec:
-  replicas: "1"
+  replicas: 1
+  revisionHistoryLimit: 1
   selector:
     app: gitlab-ce
     deploymentconfig: gitlab-ce-runner
@@ -82,4 +82,5 @@ spec:
       from:
         kind: ImageStreamTag
         name: gitlab-ce-runner:gitlab-runner-v12.7.0
+        namespace: issc-lab
     type: ImageChange

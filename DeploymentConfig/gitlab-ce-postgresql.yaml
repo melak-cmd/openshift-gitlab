@@ -49,6 +49,8 @@ spec:
           value: gitlabhq_production
         - name: POSTGRESQL_ADMIN_PASSWORD
           value: pWIbCOFPa3tq71DY
+        - name: HOME
+          value: /tmp
         image: gitlab-ce-postgresql
         imagePullPolicy: IfNotPresent
         livenessProbe:
