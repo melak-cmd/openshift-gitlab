@@ -5,7 +5,7 @@ metadata:
     app: gitlab
     createdBy: gitlab-ce-template
   name: gitlab-runner
-  namespace: issc-lab
+  namespace: gitlab
 spec:
   replicas: "1"
   selector:
@@ -32,7 +32,7 @@ spec:
         - /scripts/entrypoint
         env:
         - name: REGISTRATION_TOKEN
-          value: yIFjp40pXcwjNuor
+          value: nMaEY7HJWsIxoPJR
         - name: REGISTER_LOCKED
           value: "false"
         - name: KUBERNETES_PRIVILEGED

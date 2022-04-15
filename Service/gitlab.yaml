@@ -5,14 +5,8 @@ metadata:
     app: gitlab
     createdBy: gitlab-ce-template
   name: gitlab
-  namespace: issc-lab
+  namespace: gitlab
 spec:
-  clusterIP: 172.30.47.173
-  clusterIPs:
-  - 172.30.47.173
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack
   ports:
   - name: 22-ssh
     port: 22

@@ -5,21 +5,16 @@ metadata:
     app: gitlab
     createdBy: gitlab-ce-template
   name: gitlab-redis
-  namespace: issc-lab
+  namespace: gitlab
 spec:
   replicas: 1
-  revisionHistoryLimit: 10
   selector:
     app: gitlab
     deploymentconfig: gitlab-redis
   strategy:
-    activeDeadlineSeconds: 21600
-    recreateParams:
-      timeoutSeconds: 600
     type: Recreate
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: gitlab
         deploymentconfig: gitlab-redis
@@ -30,7 +25,7 @@ spec:
         command:
         - /bin/sh
         - -ec
-        image: redis@sha256:6c42cce2871e8dc5fb3e843ed5c4e7939d312faf5e53ff0ff4ca955a7e0b2b39
+        image: gitlab-ce-redis
         imagePullPolicy: IfNotPresent
         name: gitlab-ce-redis
         ports:
@@ -44,13 +39,11 @@ spec:
             cpu: 100m
             memory: 300Mi
         terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /data
           name: gitlab-ce-volume-4
       dnsPolicy: ClusterFirst
       restartPolicy: Always
-      schedulerName: default-scheduler
       terminationGracePeriodSeconds: 30
       volumes:
       - name: gitlab-ce-volume-4
@@ -66,6 +59,4 @@ spec:
       from:
         kind: ImageStreamTag
         name: gitlab-redis:alpine3.15
-        namespace: issc-lab
-      lastTriggeredImage: redis@sha256:6c42cce2871e8dc5fb3e843ed5c4e7939d312faf5e53ff0ff4ca955a7e0b2b39
     type: ImageChange

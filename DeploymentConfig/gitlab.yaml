@@ -5,21 +5,16 @@ metadata:
     app: gitlab
     createdBy: gitlab-ce-template
   name: gitlab
-  namespace: issc-lab
+  namespace: gitlab
 spec:
   replicas: 1
-  revisionHistoryLimit: 10
   selector:
     app: gitlab
     deploymentconfig: gitlab
   strategy:
-    activeDeadlineSeconds: 21600
-    recreateParams:
-      timeoutSeconds: 600
     type: Recreate
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: gitlab
         deploymentconfig: gitlab
@@ -31,7 +26,7 @@ spec:
             configMapKeyRef:
               key: gitlab.rb
               name: gitlab-config
-        image: gitlab/gitlab-ce@sha256:27239739d2edba94fb4933109ecffbf1e12ef104ded805d90ec328fa4cfa58b4
+        image: gitlab-ce
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -67,7 +62,6 @@ spec:
             cpu: 500m
             memory: 1Gi
         terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /etc/gitlab
           name: gitlab-ce-volume-1
@@ -79,9 +73,7 @@ spec:
           name: gitlab-ce-volume-4
       dnsPolicy: ClusterFirst
       restartPolicy: Always
-      schedulerName: default-scheduler
       serviceAccount: gitlab-user
-      serviceAccountName: gitlab-user
       terminationGracePeriodSeconds: 30
       volumes:
       - name: gitlab-ce-volume-1
@@ -106,6 +98,4 @@ spec:
       from:
         kind: ImageStreamTag
         name: gitlab:gitlab-14.9.3
-        namespace: issc-lab
-      lastTriggeredImage: gitlab/gitlab-ce@sha256:27239739d2edba94fb4933109ecffbf1e12ef104ded805d90ec328fa4cfa58b4
     type: ImageChange

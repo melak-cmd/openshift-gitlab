@@ -5,14 +5,8 @@ metadata:
     app: gitlab
     createdBy: gitlab-ce-template
   name: gitlab-postgresql
-  namespace: issc-lab
+  namespace: gitlab
 spec:
-  clusterIP: 172.30.25.34
-  clusterIPs:
-  - 172.30.25.34
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack
   ports:
   - name: 5432-postgresql
     port: 5432

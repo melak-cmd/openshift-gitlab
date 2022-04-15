@@ -4,9 +4,9 @@ resources:
 - ConfigMap/gitlab-config.yaml
 - ConfigMap/gitlab-runner.yaml
 - DeploymentConfig/gitlab-postgresql.yaml
-- DeploymentConfig/gitlab-redis.yaml
-- DeploymentConfig/gitlab-runner.yaml
-- DeploymentConfig/gitlab.yaml
+# - DeploymentConfig/gitlab-redis.yaml
+# - DeploymentConfig/gitlab-runner.yaml
+# - DeploymentConfig/gitlab.yaml
 - ImageStream/gitlab-redis.yaml
 - ImageStream/gitlab-runner.yaml
 - ImageStream/gitlab.yaml

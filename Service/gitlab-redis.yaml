@@ -5,14 +5,8 @@ metadata:
     app: gitlab
     createdBy: gitlab-ce-template
   name: gitlab-redis
-  namespace: issc-lab
+  namespace: gitlab
 spec:
-  clusterIP: 172.30.108.148
-  clusterIPs:
-  - 172.30.108.148
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack
   ports:
   - name: 6379-redis
     port: 6379

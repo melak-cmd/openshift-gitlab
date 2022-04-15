@@ -1,19 +1,13 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  annotations:
-    pv.kubernetes.io/bind-completed: "yes"
-    pv.kubernetes.io/bound-by-controller: "yes"
-    volume.beta.kubernetes.io/storage-provisioner: kubernetes.io/vsphere-volume
   labels:
     createdBy: gitlab-ce-template
   name: gitlab-etc
-  namespace: issc-lab
+  namespace: gitlab
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
       storage: 100Mi
-  storageClassName: vsphere-standard-xfs
-  volumeName: pvc-1ab525f9-f266-4c47-9f15-6fbb9c3b435e

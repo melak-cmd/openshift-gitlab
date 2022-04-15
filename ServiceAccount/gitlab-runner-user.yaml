@@ -1,12 +1,7 @@
 apiVersion: v1
-imagePullSecrets:
-- name: gitlab-runner-user-dockercfg-gfs9b
 kind: ServiceAccount
 metadata:
   labels:
     createdBy: gitlab-ce-template
   name: gitlab-runner-user
-  namespace: issc-lab
-secrets:
-- name: gitlab-runner-user-token-tqsjh
-- name: gitlab-runner-user-dockercfg-gfs9b
+  namespace: gitlab
