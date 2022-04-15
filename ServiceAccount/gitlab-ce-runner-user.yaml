@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    createdBy: gitlab-ce-template
+  name: gitlab-ce-runner-user
+  namespace: issc-lab

@@ -1,0 +1,101 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: gitlab-ce
+    createdBy: gitlab-ce-template
+  name: gitlab-ce
+  namespace: issc-lab
+spec:
+  replicas: 1
+  selector:
+    app: gitlab-ce
+    deploymentconfig: gitlab-ce
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: gitlab-ce
+        deploymentconfig: gitlab-ce
+    spec:
+      containers:
+      - env:
+        - name: GITLAB_OMNIBUS_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              key: gitlab.rb
+              name: gitlab-config
+        image: gitlab-ce
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /-/liveness
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 180
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: gitlab-ce
+        ports:
+        - containerPort: 22
+          protocol: TCP
+        - containerPort: 80
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /-/readiness
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 120
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: "1"
+            memory: 4Gi
+          requests:
+            cpu: 500m
+            memory: 1Gi
+        terminationMessagePath: /dev/termination-log
+        volumeMounts:
+        - mountPath: /etc/gitlab
+          name: gitlab-ce-volume-1
+        - mountPath: /gitlab-data
+          name: gitlab-ce-volume-2
+        - mountPath: /var/opt/gitlab/gitlab-rails/shared/artifacts
+          name: gitlab-ce-volume-3
+        - mountPath: /var/opt/gitlab/gitlab-rails/shared/pages
+          name: gitlab-ce-volume-4
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      serviceAccount: gitlab-ce-user
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: gitlab-ce-volume-1
+        persistentVolumeClaim:
+          claimName: gitlab-ce-etc
+      - name: gitlab-ce-volume-2
+        persistentVolumeClaim:
+          claimName: gitlab-ce-data
+      - name: gitlab-ce-volume-3
+        persistentVolumeClaim:
+          claimName: gitlab-ce-artifacts
+      - name: gitlab-ce-volume-4
+        persistentVolumeClaim:
+          claimName: gitlab-ce-pages
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - gitlab-ce
+      from:
+        kind: ImageStreamTag
+        name: gitlab-ce:gitlab-12.4.8
+    type: ImageChange

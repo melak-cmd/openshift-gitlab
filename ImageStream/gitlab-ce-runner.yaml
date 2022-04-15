@@ -1,0 +1,14 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: gitlab-ce
+    createdBy: gitlab-ce-template
+  name: gitlab-ce-runner
+  namespace: issc-lab
+spec:
+  tags:
+  - from:
+      kind: DockerImage
+      name: gitlab/gitlab-runner:v12.7.0
+    name: gitlab-runner-v12.7.0
