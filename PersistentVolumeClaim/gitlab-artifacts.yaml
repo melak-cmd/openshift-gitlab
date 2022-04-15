@@ -4,7 +4,7 @@ metadata:
   labels:
     createdBy: gitlab-ce-template
   name: gitlab-artifacts
-  namespace: gitlab
+  namespace: issc-lab
 spec:
   accessModes:
   - ReadWriteOnce

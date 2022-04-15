@@ -5,7 +5,7 @@ metadata:
     app: gitlab
     createdBy: gitlab-ce-template
   name: gitlab-runner
-  namespace: gitlab
+  namespace: issc-lab
 spec:
   tags:
   - from:

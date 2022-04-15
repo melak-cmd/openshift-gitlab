@@ -5,7 +5,7 @@ metadata:
     app: gitlab
     createdBy: gitlab-ce-template
   name: gitlab-postgresql
-  namespace: gitlab
+  namespace: issc-lab
 spec:
   replicas: 1
   selector:
@@ -19,7 +19,7 @@ spec:
           - /usr/bin/scl
           - enable
           - rh-postgresql96
-          - export PGPASSWORD='ps1urHVQhpdkmDHM'; psql -h 'gitlab-postgresql' -U postgres
+          - export PGPASSWORD='kFQbLN0KmW5ACrjT'; psql -h 'gitlab-postgresql' -U postgres
             -d gitlabhq_production -c 'CREATE EXTENSION IF NOT EXISTS pg_trgm;'
           containerName: gitlab-ce-postgresql
           env:
@@ -40,13 +40,13 @@ spec:
       containers:
       - env:
         - name: POSTGRESQL_USER
-          value: userSPA
+          value: userWXQ
         - name: POSTGRESQL_PASSWORD
-          value: J71qRlvQDVjkNg5G
+          value: JY40Bupwrr5WefLI
         - name: POSTGRESQL_DATABASE
           value: gitlabhq_production
         - name: POSTGRESQL_ADMIN_PASSWORD
-          value: ps1urHVQhpdkmDHM
+          value: kFQbLN0KmW5ACrjT
         image: gitlab-ce-postgresql
         imagePullPolicy: IfNotPresent
         livenessProbe:

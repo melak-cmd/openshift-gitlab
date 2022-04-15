@@ -5,7 +5,7 @@ metadata:
     app: gitlab
     createdBy: gitlab-ce-template
   name: gitlab
-  namespace: gitlab
+  namespace: issc-lab
 spec:
   host: gitlab.apps.caas-oat.gdc.geodis.org
   port:
