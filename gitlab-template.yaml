@@ -22,8 +22,8 @@ objects:
     tags:
     - from:
         kind: DockerImage
-        name: gitlab/gitlab-ce:12.4.8-ce.0
-      name: gitlab-12.4.8
+        name: gitlab/gitlab-ce:14.9.3-ce.0
+      name: gitlab-14.9.3
 - apiVersion: v1
   kind: ImageStream
   metadata:
@@ -34,8 +34,8 @@ objects:
     tags:
     - from:
         kind: DockerImage
-        name: gitlab/gitlab-runner:v12.7.0
-      name: gitlab-runner-v12.7.0
+        name: gitlab/gitlab-runner:v14.9.1
+      name: gitlab-runner-v14.9.1
 - apiVersion: v1
   kind: ImageStream
   metadata:
@@ -46,8 +46,8 @@ objects:
     tags:
     - from:
         kind: DockerImage
-        name: redis:3.2.3-alpine
-      name: 3.2.3
+        name: redis:alpine3.15
+      name: alpine3.15
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
@@ -155,7 +155,7 @@ objects:
         - gitlab-ce
         from:
           kind: ImageStreamTag
-          name: ${APPLICATION_NAME}:gitlab-12.4.8
+          name: ${APPLICATION_NAME}:gitlab-14.9.3
       type: ImageChange
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
@@ -243,7 +243,7 @@ objects:
         - gitlab-runner
         from:
           kind: ImageStreamTag
-          name: ${APPLICATION_NAME}-runner:gitlab-runner-v12.7.0
+          name: ${APPLICATION_NAME}-runner:gitlab-runner-v14.9.1
       type: ImageChange
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
@@ -305,7 +305,7 @@ objects:
         - gitlab-ce-redis
         from:
           kind: ImageStreamTag
-          name: ${APPLICATION_NAME}-redis:3.2.3
+          name: ${APPLICATION_NAME}-redis:alpine3.15
       type: ImageChange
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
