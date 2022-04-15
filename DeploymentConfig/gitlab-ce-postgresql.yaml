@@ -19,7 +19,7 @@ spec:
           - /usr/bin/scl
           - enable
           - rh-postgresql96
-          - export PGPASSWORD='7fL8sC30mr5V6g1h'; psql -h 'gitlab-ce-postgresql' -U
+          - export PGPASSWORD='pWIbCOFPa3tq71DY'; psql -h 'gitlab-ce-postgresql' -U
             postgres -d gitlabhq_production -c 'CREATE EXTENSION IF NOT EXISTS pg_trgm;'
           containerName: gitlab-ce-postgresql
           env:
@@ -40,13 +40,13 @@ spec:
       containers:
       - env:
         - name: POSTGRESQL_USER
-          value: userYIN
+          value: userH67
         - name: POSTGRESQL_PASSWORD
-          value: QUuNM3EHQqAmakBk
+          value: YYjcEVSvooIfswgd
         - name: POSTGRESQL_DATABASE
           value: gitlabhq_production
         - name: POSTGRESQL_ADMIN_PASSWORD
-          value: 7fL8sC30mr5V6g1h
+          value: pWIbCOFPa3tq71DY
         image: gitlab-ce-postgresql
         imagePullPolicy: IfNotPresent
         livenessProbe:
