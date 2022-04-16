@@ -6,7 +6,7 @@ metadata:
     createdBy: gitlab-ce-template
   name: gitlab-runner
 spec:
-  replicas: "1"
+  replicas: 1
   selector:
     app: gitlab
     deploymentconfig: gitlab-runner
