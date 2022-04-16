@@ -2,13 +2,12 @@ apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   labels:
-    app: gitlab-ce
+    app: gitlab
     createdBy: gitlab-ce-template
-  name: gitlab-ce-redis
-  namespace: issc-lab
+  name: gitlab
 spec:
   tags:
   - from:
       kind: DockerImage
-      name: redis:3.2.3-alpine
-    name: 3.2.3
+      name: gitlab/gitlab-ce:12.4.8-ce.0
+    name: gitlab-12.4.8

@@ -2,25 +2,23 @@ apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   labels:
-    app: gitlab-ce
-  name: gitlab-ce-redis
-  namespace: issc-lab
+    app: gitlab
+    createdBy: gitlab-ce-template
+  name: gitlab-redis
 spec:
   replicas: 1
-  revisionHistoryLimit: 1
   selector:
-    app: gitlab-ce
-    deploymentconfig: gitlab-ce-redis
+    app: gitlab
+    deploymentconfig: gitlab-redis
   strategy:
-    activeDeadlineSeconds: 21600
-    recreateParams:
-      timeoutSeconds: 600
+    recreateParams: {}
+    resources: {}
     type: Recreate
   template:
     metadata:
       labels:
-        app: gitlab-ce
-        deploymentconfig: gitlab-ce-redis
+        app: gitlab
+        deploymentconfig: gitlab-redis
     spec:
       containers:
       - args:
@@ -42,18 +40,16 @@ spec:
             cpu: 100m
             memory: 300Mi
         terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /data
           name: gitlab-ce-volume-4
       dnsPolicy: ClusterFirst
       restartPolicy: Always
-      schedulerName: default-scheduler
       terminationGracePeriodSeconds: 30
       volumes:
       - name: gitlab-ce-volume-4
         persistentVolumeClaim:
-          claimName: gitlab-ce-redis-data
+          claimName: gitlab-redis-data
   test: false
   triggers:
   - type: ConfigChange
@@ -63,6 +59,5 @@ spec:
       - gitlab-ce-redis
       from:
         kind: ImageStreamTag
-        name: gitlab-ce-redis:3.2.3
-        namespace: issc-lab
+        name: gitlab-redis:3.2.3
     type: ImageChange

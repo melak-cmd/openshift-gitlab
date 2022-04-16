@@ -26,4 +26,3 @@ metadata:
   labels:
     createdBy: gitlab-ce-template
   name: gitlab-runner
-  namespace: issc-lab

@@ -3,11 +3,10 @@ kind: PersistentVolumeClaim
 metadata:
   labels:
     createdBy: gitlab-ce-template
-  name: gitlab-ce-postgresql
-  namespace: issc-lab
+  name: gitlab-artifacts
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 5Gi

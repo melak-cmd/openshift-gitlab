@@ -1,11 +1,11 @@
 apiVersion: v1
 data:
   gitlab.rb: |
-    external_url "http://gitlab.apps.caas-oat.gdc.geodis.org/"
+    external_url "http://gitlab/"
     postgresql['enable']=false
     gitlab_rails['db_host'] = 'gitlab-postgresql'
-    gitlab_rails['db_password']='JY40Bupwrr5WefLI'
-    gitlab_rails['db_username']='userWXQ'
+    gitlab_rails['db_password']='KibfSxS4AlGmWktL'
+    gitlab_rails['db_username']='userNYW'
     gitlab_rails['db_database']='gitlabhq_production'
     redis['enable'] = false
     gitlab_rails['redis_host']='gitlab-redis'
@@ -19,11 +19,10 @@ data:
     gitlab_ci['builds_directory'] = '/gitlab-data/builds'
     prometheus_monitoring['enable'] = false
     gitlab_rails['usage_ping_enabled'] = false
-    gitlab_rails['initial_shared_runners_registration_token'] = "W0cYJruRbf2C0ekT"
+    gitlab_rails['initial_shared_runners_registration_token'] = "Dk3yfKKINvTUiMfd"
     gitlab_rails['monitoring_whitelist'] = ['0.0.0.0/0']
 kind: ConfigMap
 metadata:
   labels:
     createdBy: gitlab-ce-template
   name: gitlab-config
-  namespace: issc-lab

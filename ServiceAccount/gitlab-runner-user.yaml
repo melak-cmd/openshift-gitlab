@@ -3,5 +3,4 @@ kind: ServiceAccount
 metadata:
   labels:
     createdBy: gitlab-ce-template
-  name: gitlab-ce-user
-  namespace: issc-lab
+  name: gitlab-runner-user

@@ -2,17 +2,17 @@ apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   labels:
-    app: gitlab-ce
-  name: gitlab-ce-runner
-  namespace: issc-lab
+    app: gitlab
+    createdBy: gitlab-ce-template
+  name: gitlab-runner
 spec:
-  replicas: 1
-  revisionHistoryLimit: 1
+  replicas: "1"
   selector:
-    app: gitlab-ce
-    deploymentconfig: gitlab-ce-runner
+    app: gitlab
+    deploymentconfig: gitlab-runner
   strategy:
     activeDeadlineSeconds: 21600
+    resources: {}
     rollingParams:
       intervalSeconds: 1
       maxSurge: 25%
@@ -23,8 +23,8 @@ spec:
   template:
     metadata:
       labels:
-        app: gitlab-ce
-        deploymentconfig: gitlab-ce-runner
+        app: gitlab
+        deploymentconfig: gitlab-runner
     spec:
       containers:
       - command:
@@ -32,7 +32,7 @@ spec:
         - /scripts/entrypoint
         env:
         - name: REGISTRATION_TOKEN
-          value: pMCfkXg5ufTTmP5K
+          value: Dk3yfKKINvTUiMfd
         - name: REGISTER_LOCKED
           value: "false"
         - name: KUBERNETES_PRIVILEGED
@@ -47,6 +47,7 @@ spec:
         image: gitlab-runner
         imagePullPolicy: IfNotPresent
         name: gitlab-runner
+        resources: {}
         securityContext:
           privileged: true
           runAsUser: 0
@@ -62,12 +63,15 @@ spec:
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
-      serviceAccount: gitlab-ce-runner-user
-      serviceAccountName: gitlab-ce-runner-user
+      securityContext: {}
+      serviceAccount: gitlab-runner-user
+      serviceAccountName: gitlab-runner-user
       terminationGracePeriodSeconds: 30
       volumes:
-      - name: gitlab-runner-1
-      - name: gitlab-runner-2
+      - emptyDir: {}
+        name: gitlab-runner-1
+      - emptyDir: {}
+        name: gitlab-runner-2
       - configMap:
           defaultMode: 420
           name: gitlab-runner
@@ -81,6 +85,5 @@ spec:
       - gitlab-runner
       from:
         kind: ImageStreamTag
-        name: gitlab-ce-runner:gitlab-runner-v12.7.0
-        namespace: issc-lab
+        name: gitlab-runner:gitlab-runner-v12.7.0
     type: ImageChange

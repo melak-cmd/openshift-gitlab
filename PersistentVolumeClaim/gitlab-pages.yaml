@@ -3,11 +3,10 @@ kind: PersistentVolumeClaim
 metadata:
   labels:
     createdBy: gitlab-ce-template
-  name: gitlab-ce-data
-  namespace: issc-lab
+  name: gitlab-pages
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 1Gi
