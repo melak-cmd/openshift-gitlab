@@ -5,12 +5,15 @@ metadata:
     app: gitlab
     createdBy: gitlab-ce-template
   name: gitlab-postgresql
+  namespace: issc-lab
 spec:
   replicas: 1
+  revisionHistoryLimit: 0
   selector:
     app: gitlab
     deploymentconfig: gitlab-postgresql
   strategy:
+    activeDeadlineSeconds: 21600
     recreateParams:
       post:
         execNewPod:
@@ -23,16 +26,17 @@ spec:
           containerName: gitlab-ce-postgresql
           env:
           - name: HOME
-            value: /var/lib/pgsql
+            value: /tmp
           - name: PGDATA
             value: /var/lib/pgsql/data/userdata
           - name: CONTAINER_SCRIPTS_PATH
             value: /usr/share/container-scripts/postgresql
         failurePolicy: Retry
-    resources: {}
+      timeoutSeconds: 600
     type: Recreate
   template:
     metadata:
+      creationTimestamp: null
       labels:
         app: gitlab
         deploymentconfig: gitlab-postgresql
@@ -47,10 +51,15 @@ spec:
           value: gitlabhq_production
         - name: POSTGRESQL_ADMIN_PASSWORD
           value: f250mVVJDlxJ51Xj
-        image: gitlab-ce-postgresql
+        - name: HOME
+          value: /tmp
+        image: image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:5c4f5f52a37718a9a1997ba212ef172694475558c35232b56dac638529c5b569
         imagePullPolicy: IfNotPresent
         livenessProbe:
+          failureThreshold: 3
           initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
           tcpSocket:
             port: 5432
           timeoutSeconds: 1
@@ -66,7 +75,10 @@ spec:
             - -c
             - psql -h 127.0.0.1 -U $POSTGRESQL_USER -q -d $POSTGRESQL_DATABASE -c
               'SELECT 1'
+          failureThreshold: 3
           initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
           timeoutSeconds: 1
         resources:
           limits:
@@ -76,11 +88,15 @@ spec:
             cpu: "1"
             memory: 512Mi
         terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /var/lib/pgsql/data
           name: gitlab-ce-volume-3
+        - mountPath: /var/lib/pgsql/data/userdata
+          name: gitlab-ce-volume-3
       dnsPolicy: ClusterFirst
       restartPolicy: Always
+      schedulerName: default-scheduler
       terminationGracePeriodSeconds: 30
       volumes:
       - name: gitlab-ce-volume-3
@@ -97,4 +113,5 @@ spec:
         kind: ImageStreamTag
         name: postgresql:10
         namespace: openshift
+      lastTriggeredImage: image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:5c4f5f52a37718a9a1997ba212ef172694475558c35232b56dac638529c5b569
     type: ImageChange
