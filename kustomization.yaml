@@ -4,10 +4,10 @@ resources:
 - .git/info/exclude
 - ConfigMap/gitlab-config.yaml
 - ConfigMap/gitlab-runner.yaml
-- DeploymentConfig/gitlab-postgresql.yaml
-# - DeploymentConfig/gitlab-redis.yaml
+# - DeploymentConfig/gitlab-postgresql.yaml
+# - Deployment/gitlab-redis.yaml
 # - DeploymentConfig/gitlab-runner.yaml
-# - DeploymentConfig/gitlab.yaml
+- Deployment/gitlab.yaml
 - ImageStream/gitlab-redis.yaml
 - ImageStream/gitlab-runner.yaml
 - ImageStream/gitlab.yaml

@@ -9,5 +9,5 @@ spec:
   tags:
   - from:
       kind: DockerImage
-      name: gitlab/gitlab-ce:12.4.8-ce.0
-    name: gitlab-12.4.8
+      name: gitlab/gitlab-ce:12.9.10-ce.0
+    name: latest

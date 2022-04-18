@@ -9,5 +9,5 @@ spec:
   tags:
   - from:
       kind: DockerImage
-      name: redis:3.2.3-alpine
-    name: 3.2.3
+      name: redis:6.2.6-alpine
+    name: latest

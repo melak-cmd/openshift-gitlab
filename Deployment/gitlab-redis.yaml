@@ -1,25 +1,27 @@
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: apps/v1
+kind: Deployment
 metadata:
+  annotations:
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"gitlab-redis:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"gitlab-redis\")].image"}]'
   labels:
-    app: gitlab
+    app: gitlab-redis
+    app.kubernetes.io/component: gitlab-redis
+    app.kubernetes.io/instance: gitlab-redis
+    app.kubernetes.io/name: gitlab-redis
   name: gitlab-redis
 spec:
-  replicas: 0
-  revisionHistoryLimit: 1
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
   selector:
-    app: gitlab
-    deploymentconfig: gitlab-redis
+    matchLabels:
+      deployment: gitlab-redis
   strategy:
-    activeDeadlineSeconds: 21600
-    recreateParams:
-      timeoutSeconds: 600
     type: Recreate
   template:
     metadata:
       labels:
-        app: gitlab
-        deploymentconfig: gitlab-redis
+        deployment: gitlab-redis
     spec:
       containers:
       - args:
@@ -27,9 +29,9 @@ spec:
         command:
         - /bin/sh
         - -ec
-        image: gitlab-ce-redis
+        image: ' '
         imagePullPolicy: IfNotPresent
-        name: gitlab-ce-redis
+        name: gitlab-redis
         ports:
         - containerPort: 6379
           protocol: TCP
@@ -44,23 +46,12 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /data
-          name: gitlab-ce-volume-4
+          name: gitlab-redis-volume-1
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
       terminationGracePeriodSeconds: 30
       volumes:
-      - name: gitlab-ce-volume-4
+      - name: gitlab-redis-volume-1
         persistentVolumeClaim:
           claimName: gitlab-redis-data
-  test: false
-  triggers:
-  - type: ConfigChange
-  - imageChangeParams:
-      automatic: true
-      containerNames:
-      - gitlab-ce-redis
-      from:
-        kind: ImageStreamTag
-        name: gitlab-redis:latest
-    type: ImageChange

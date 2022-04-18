@@ -3,16 +3,15 @@ kind: DeploymentConfig
 metadata:
   labels:
     app: gitlab
-    createdBy: gitlab-ce-template
   name: gitlab-runner
 spec:
   replicas: 1
+  revisionHistoryLimit: 1
   selector:
     app: gitlab
     deploymentconfig: gitlab-runner
   strategy:
     activeDeadlineSeconds: 21600
-    resources: {}
     rollingParams:
       intervalSeconds: 1
       maxSurge: 25%
@@ -47,7 +46,6 @@ spec:
         image: gitlab-runner
         imagePullPolicy: IfNotPresent
         name: gitlab-runner
-        resources: {}
         securityContext:
           privileged: true
           runAsUser: 0
@@ -63,15 +61,14 @@ spec:
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
-      securityContext: {}
       serviceAccount: gitlab-runner-user
       serviceAccountName: gitlab-runner-user
       terminationGracePeriodSeconds: 30
       volumes:
-      - emptyDir: {}
-        name: gitlab-runner-1
-      - emptyDir: {}
-        name: gitlab-runner-2
+      - name: gitlab-runner-1
+        emptyDir: {}
+      - name: gitlab-runner-2
+        emptyDir: {}
       - configMap:
           defaultMode: 420
           name: gitlab-runner

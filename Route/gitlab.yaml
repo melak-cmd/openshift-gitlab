@@ -6,7 +6,7 @@ metadata:
     createdBy: gitlab-ce-template
   name: gitlab
 spec:
-  host: gitlab
+  host: gitlab.apps.caas-oat.gdc.geodis.org
   port:
     targetPort: 80-http
   to:

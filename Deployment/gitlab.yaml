@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"gitlab:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"gitlab\")].image"}]'
+  labels:
+    app: gitlab
+    app.kubernetes.io/component: gitlab
+    app.kubernetes.io/instance: gitlab
+    app.kubernetes.io/name: gitlab
+  name: gitlab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: gitlab
+  template:
+    metadata:
+      labels:
+        deployment: gitlab
+    spec:
+      containers:
+      - image: ' '
+        name: gitlab
+        env:
+        - name: GITLAB_OMNIBUS_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              key: gitlab.rb
+              name: gitlab-config
+        ports:
+        - containerPort: 22
+          protocol: TCP
+        - containerPort: 443
+          protocol: TCP
+        - containerPort: 80
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /etc/gitlab
+          name: gitlab-volume-1
+        - mountPath: /gitlab-data
+          name: gitlab-volume-2
+        - mountPath: /var/opt/gitlab/gitlab-rails/shared/artifacts
+          name: gitlab-volume-3
+        - mountPath: /var/opt/gitlab/gitlab-rails/shared/pages
+          name: gitlab-volume-4
+      volumes:
+      - name: gitlab-volume-1
+        persistentVolumeClaim:
+          claimName: gitlab-etc
+      - name: gitlab-volume-2
+        persistentVolumeClaim:
+          claimName: gitlab-data
+      - name: gitlab-volume-3
+        persistentVolumeClaim:
+          claimName: gitlab-artifacts
+      - name: gitlab-volume-4
+        persistentVolumeClaim:
+          claimName: gitlab-pages
